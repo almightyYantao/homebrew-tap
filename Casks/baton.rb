@@ -17,12 +17,14 @@ cask "baton" do
 
   app "Baton.app"
 
-  uninstall launchctl: "com.longbridge.baton",
-            quit:      "com.longbridge.claude-switch"
+  # No launchctl here: uninstall also runs on upgrade and would drop the
+  # user's login item. zap removes it.
+  uninstall quit: "com.longbridge.claude-switch"
 
-  zap trash: [
-    "~/.baton",
-    "~/Library/LaunchAgents/com.longbridge.baton.plist",
-    "~/Library/Preferences/com.longbridge.claude-switch.plist",
-  ]
+  zap launchctl: "com.longbridge.baton",
+      trash:     [
+        "~/.baton",
+        "~/Library/LaunchAgents/com.longbridge.baton.plist",
+        "~/Library/Preferences/com.longbridge.claude-switch.plist",
+      ]
 end
